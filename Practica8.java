@@ -13,13 +13,27 @@ public class Practica8{
 		
 		MM.inicio();
 		
+		System.out.print("Nombre del torneo: ");
+		MM.setNombre(in.nextLine());
+		
+		System.out.print("Region: ");
+		MM.setRegion(in.nextLine());
+		
+		System.out.print("Partidas jugadas: ");
+		MM.setPartidasJugadas(in.nextInt());
+		MM.setPartidasPendientes(4 - MM.getPartidasJugadas());
+		aux = in.nextLine();
+		
 		for(int i = 0; i < C.T; i++){
-			System.out.print("Equipo " + i + ": ");
+			System.out.print("\nEquipo " + (i + 1) + ": ");
 			MM.equipos[i].setNombre(in.nextLine());
+			
+			System.out.print("Division: ");
+			MM.equipos[i].setDivision(in.nextLine());
 			
 			for(int j = 0; j < C.P; j++){
 				do{
-					System.out.print("Jugador " + j + ": ");
+					System.out.print("Jugador " + (j + 1) + ": ");
 					aux = in.nextLine();
 				}while(MM.buscarJugador(aux) == C.T);
 				
@@ -27,19 +41,23 @@ public class Practica8{
 			}
 		}
 		
+		
+		System.out.println("\n\tTorneo " + MM.getNombre() + "       Region: " + MM.getRegion() + "       No. de participantes: " + MM.getNoEquipos());
+		System.out.println("\t\tPartidas jugadas: " + MM.getPartidasJugadas() + "    Partidas pendientes: " + MM.getPartidasPendientes());
 		for(int i = 0; i < C.T; i++){
-			System.out.println("\n\tEquipo: " + MM.equipos[i].getNombre() + "\n");
+			System.out.print("\n\tEquipo: " + MM.equipos[i].getNombre());
+			System.out.println("     Division: " + MM.equipos[i].getDivision());
+			
+			System.out.print("\tJugadores: " + MM.equipos[i].getJugadores());
+			System.out.println("     Puntuacion total: " + MM.equipos[i].puntosTotales());
 			
 			for(int j = 0; j < C.P; j++){
-				for(int k = 0; k < 3; k++){
+				for(int k = 0; k < 2; k++){
 					if(k == 0){
 						System.out.print("Camisa: " + MM.equipos[i].jugadores[j].getNoUniforme() + "\t");
 					}
 					else if(k == 1){
 						System.out.print("Nombre: " + MM.equipos[i].jugadores[j].getNombre() + "\t");
-					}
-					else if(k == 2){
-						System.out.print("Puntos: " + MM.equipos[i].jugadores[j].getPuntos() + "\t");
 					}
 				}
 				System.out.println("");
@@ -85,11 +103,14 @@ class Equipo{
 		return division;
 	}
 	
+	public void setDivision(String division){
+		this.division = division;
+	}
+	
 	public void inicio(){
 		for(int i = 0; i < C.P; i++){
 			jugadores[i] = new Jugador();
 			jugadores[i].setNombre("");
-			jugadores[i].setPuntos(0);
 			jugadores[i].setNoUniforme(i + C.T);
 		}
 	}
@@ -141,22 +162,42 @@ class Torneo{
 		return region;
 	}
 	
+	public void setRegion(String region){
+		this.region = region;
+	}
+	
 	public int getNoEquipos(){
-		return noEquipos;
+		int i = 0;
+		while(i < C.T){
+			if(equipos[i].getNombre() == ""){
+				return i;
+			}
+			i++;
+		}
+		return i;
 	}
 	
 	public int getPartidasJugadas(){
 		return noPartidasJugadas;
 	}
 	
+	public void setPartidasJugadas(int noPartidasJugadas){
+		this.noPartidasJugadas = noPartidasJugadas;
+	}
+	
 	public int getPartidasPendientes(){
 		return noPartidasPendientes;
+	}
+	
+	public void setPartidasPendientes(int noPartidasPendientes){
+		this.noPartidasPendientes = noPartidasPendientes;
 	}
 	
 	public void inicio(){
 		for(int i = 0; i < C.T; i++){
 			equipos[i] = new Equipo();
 			equipos[i].setNombre("");
+			equipos[i].setDivision("");
 			equipos[i].inicio(); 
 		}
 	}
