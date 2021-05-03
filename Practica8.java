@@ -1,10 +1,5 @@
 import java.util.*;
 
-class C{
-	static int T = 5, P = 10;
-	
-}
-
 public class Practica8{
 	public static void main(String args[]){
 		Scanner in = new Scanner(System.in);
@@ -24,18 +19,18 @@ public class Practica8{
 		MM.setPartidasPendientes(4 - MM.getPartidasJugadas());
 		aux = in.nextLine();
 		
-		for(int i = 0; i < C.T; i++){
+		for(int i = 0; i < 5; i++){
 			System.out.print("\nEquipo " + (i + 1) + ": ");
 			MM.equipos[i].setNombre(in.nextLine());
 			
 			System.out.print("Division: ");
 			MM.equipos[i].setDivision(in.nextLine());
 			
-			for(int j = 0; j < C.P; j++){
+			for(int j = 0; j < 10; j++){
 				do{
 					System.out.print("Jugador " + (j + 1) + ": ");
 					aux = in.nextLine();
-				}while(MM.buscarJugador(aux) == C.T);
+				}while(MM.buscarJugador(aux) == 5);
 				
 				MM.equipos[i].jugadores[j].setNombre(aux);
 			}
@@ -44,14 +39,14 @@ public class Practica8{
 		
 		System.out.println("\n\tTorneo " + MM.getNombre() + "       Region: " + MM.getRegion() + "       No. de participantes: " + MM.getNoEquipos());
 		System.out.println("\t\tPartidas jugadas: " + MM.getPartidasJugadas() + "    Partidas pendientes: " + MM.getPartidasPendientes());
-		for(int i = 0; i < C.T; i++){
+		for(int i = 0; i < 5; i++){
 			System.out.print("\n\tEquipo: " + MM.equipos[i].getNombre());
 			System.out.println("     Division: " + MM.equipos[i].getDivision());
 			
 			System.out.print("\tJugadores: " + MM.equipos[i].getJugadores());
 			System.out.println("     Puntuacion total: " + MM.equipos[i].puntosTotales());
 			
-			for(int j = 0; j < C.P; j++){
+			for(int j = 0; j < 10; j++){
 				for(int k = 0; k < 2; k++){
 					if(k == 0){
 						System.out.print("Camisa: " + MM.equipos[i].jugadores[j].getNoUniforme() + "\t");
@@ -69,12 +64,12 @@ public class Practica8{
  
 class Equipo{
 	private String nombre, division, entrenador;
-	private String torneosParticipados[], torneosGanados[], torneosPerdidos[];
-	protected Jugador jugadores[] = new Jugador[C.P];
+	private int torneosParticipados, torneosGanados, torneosPerdidos;
+	protected Jugador jugadores[] = new Jugador[10];
 	
 	public int getJugadores(){
 		int i = 0;
-		while(i < C.P){
+		while(i < 10){
 			if(jugadores[i].getNombre() == ""){
 				return i;
 			}
@@ -85,7 +80,7 @@ class Equipo{
 	
 	public int puntosTotales(){
 		int suma = 0;
-		for(int i = 0; i < C.P; i++){
+		for(int i = 0; i < 10; i++){
 			suma = jugadores[i].getPuntos();
 		}
 		return suma;
@@ -108,10 +103,10 @@ class Equipo{
 	}
 	
 	public void inicio(){
-		for(int i = 0; i < C.P; i++){
+		for(int i = 0; i < 10; i++){
 			jugadores[i] = new Jugador();
 			jugadores[i].setNombre("");
-			jugadores[i].setNoUniforme(i + C.T);
+			jugadores[i].setNoUniforme(i + 5);
 		}
 	}
 }
@@ -148,7 +143,7 @@ class Jugador{
 class Torneo{
 	private String nombre, region;
 	private int noEquipos, noPartidasJugadas, noPartidasPendientes;
-	protected static Equipo equipos[] = new Equipo[C.T];
+	protected static Equipo equipos[] = new Equipo[5];
 	
 	public String getNombre(){
 		return nombre;
@@ -168,7 +163,7 @@ class Torneo{
 	
 	public int getNoEquipos(){
 		int i = 0;
-		while(i < C.T){
+		while(i < 5){
 			if(equipos[i].getNombre() == ""){
 				return i;
 			}
@@ -194,7 +189,7 @@ class Torneo{
 	}
 	
 	public void inicio(){
-		for(int i = 0; i < C.T; i++){
+		for(int i = 0; i < 5; i++){
 			equipos[i] = new Equipo();
 			equipos[i].setNombre("");
 			equipos[i].setDivision("");
@@ -203,10 +198,10 @@ class Torneo{
 	}
 	
 	public int buscarJugador(String player){
-		for(int i = 0; i < C.T; i++){
-			for(int j = 0; j < C.P; j++){
+		for(int i = 0; i < 5; i++){
+			for(int j = 0; j < 10; j++){
 				if(player.equals(equipos[i].jugadores[j].getNombre())){
-					return C.T;
+					return 5;
 				}
 			}
 		}
